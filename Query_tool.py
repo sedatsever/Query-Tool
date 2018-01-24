@@ -22,6 +22,7 @@ class MyWindow(QtWidgets.QDialog):
         self.connect_button.clicked.connect(self.connect)
         self.generate_button.clicked.connect(self.generate)
         self.run_button.clicked.connect(self.run)
+        self.table_combo.currentIndexChanged.connect(self.list_tables)
 
     def list_db(self):
         db_connection = pyodbc.connect('Driver=SQL Server;''Server={a};''Database=gtpbrdb;''uid={b};pwd={c};'.format(
@@ -45,6 +46,8 @@ class MyWindow(QtWidgets.QDialog):
 
         self.db_combo.addItems(databases)
 
+        #db_connection.close()
+
     def connect(self):
         connection = pyodbc.connect('Driver=SQL Server;''Server={a};''Database={b};''uid={c};pwd={d};'.format(
                                                                                   a='{e}'.format(e= eroot.findall(
@@ -58,15 +61,31 @@ class MyWindow(QtWidgets.QDialog):
                                                                                       ".//*[@name='{j}']/pass".format(
                                                                                           j = self.server_combo.currentText()))[0].text)))
 
-        global cursor
         cursor = connection.cursor()
 
-        for i in self.gentables():
-            self.table_combo.addItems(i)
+        # while True:
+        #     row=cursor.fetchone()
+        #     if not row:
+        #         break
+        #     self.table_combo.addItems(i)
 
-        self.columns_combo.addItems([column[0] for column in self.table_combo.currentText.description])
+        tables=[]
 
-        self.operator_combo.addItems('=','>','<','>=','<=','NOT EQUAL TO','IN','LIKE')
+        for row in cursor.tables():
+            tables.append(row.table_name)
+
+        self.table_combo.addItems(tables)
+
+
+        # for i in self.gentables():
+        #     self.table_combo.addItems(i)
+
+        # self.columns_combo.addItems([column[0] for column in self.table_combo.currentText.description])
+        #
+        # self.operator_combo.addItems('=','>','<','>=','<=','NOT EQUAL TO','IN','LIKE')
+
+    def list_tables(self):
+        
 
     def generate(self):
         pass
@@ -75,8 +94,9 @@ class MyWindow(QtWidgets.QDialog):
         pass
 
     def gentables(self):
-        for row in cursor.tables():
-            yield row.table_name
+        pass
+        #for row in cursor.tables():
+         #   yield row.table_name
 
 
 # class Session:
