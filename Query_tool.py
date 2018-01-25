@@ -18,13 +18,14 @@ class MyWindow(QtWidgets.QDialog):
         self.server_combo.addItems([elem.attrib['name'] for elem in eroot])
 
         #Connect object functions
-        self.server_combo.currentIndexChanged.connect(self.list_db)
+        self.server_combo.currentTextChanged.connect(self.list_db)
         self.connect_button.clicked.connect(self.connect)
         self.generate_button.clicked.connect(self.generate)
         self.run_button.clicked.connect(self.run)
-        self.table_combo.currentIndexChanged.connect(self.list_tables)
+        self.table_combo.currentTextChanged.connect(self.list_columns)
 
     def list_db(self):
+        self.db_combo.clear()
         db_connection = pyodbc.connect('Driver=SQL Server;''Server={a};''Database=gtpbrdb;''uid={b};pwd={c};'.format(
                                                                                   a = '{d}'.format(d = eroot.findall(
                                                                                       ".//*[@name='{e}']/connection".format(
@@ -38,17 +39,16 @@ class MyWindow(QtWidgets.QDialog):
 
         dbcursor = db_connection.cursor()
 
-        dbcursor.execute("select name from sys.databases")
+        dbcursor.execute("select name from sys.databases (NOLOCK)")
 
         dbrows = dbcursor.fetchall()
 
-        databases = [row.name for row in dbrows]
-
-        self.db_combo.addItems(databases)
+        self.db_combo.addItems([row.name for row in dbrows])
 
         #db_connection.close()
 
     def connect(self):
+        global connection
         connection = pyodbc.connect('Driver=SQL Server;''Server={a};''Database={b};''uid={c};pwd={d};'.format(
                                                                                   a='{e}'.format(e= eroot.findall(
                                                                                       ".//*[@name='{f}']/connection".format(
@@ -69,12 +69,17 @@ class MyWindow(QtWidgets.QDialog):
         #         break
         #     self.table_combo.addItems(i)
 
-        tables=[]
+        # tables=[row.table_name for row in cursor.tables()]
 
-        for row in cursor.tables():
-            tables.append(row.table_name)
+        # for row in cursor.tables():
+        #     tables.append(row.table_name)
+        #
+        self.table_combo.clear()
+        self.table_combo.addItems([row.table_name for row in cursor.tables()])
 
-        self.table_combo.addItems(tables)
+        # columns=[]
+
+
 
 
         # for i in self.gentables():
@@ -84,8 +89,16 @@ class MyWindow(QtWidgets.QDialog):
         #
         # self.operator_combo.addItems('=','>','<','>=','<=','NOT EQUAL TO','IN','LIKE')
 
-    def list_tables(self):
-        
+    def list_columns(self):
+        self.columns_combo.clear()
+
+        tcursor = connection.cursor()
+
+        tcursor.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS (NOLOCK) WHERE TABLE_NAME = N'{table_name}'".format(table_name=self.table_combo.currentText))
+
+        tresults = tcursor.fetchall()
+
+        self.columns_combo.addItems(tresults)
 
     def generate(self):
         pass
