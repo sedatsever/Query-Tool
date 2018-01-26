@@ -117,7 +117,7 @@
     <string>Data</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget_">
+  <widget class="QTableWidget" name="d_tableWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -129,26 +129,6 @@
    <property name="sortingEnabled">
     <bool>true</bool>
    </property>
-   <row>
-    <property name="text">
-     <string>Row1</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>Row2</string>
-    </property>
-   </row>
-   <column>
-    <property name="text">
-     <string>Column1</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Column2</string>
-    </property>
-   </column>
   </widget>
   <widget class="QPushButton" name="run_button">
    <property name="geometry">
@@ -301,7 +281,7 @@
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
   <zorder>label_5</zorder>
-  <zorder>tableWidget_</zorder>
+  <zorder>d_tableWidget</zorder>
   <zorder>run_button</zorder>
   <zorder>operator_combo</zorder>
   <zorder>label_6</zorder>
