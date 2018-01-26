@@ -101,11 +101,28 @@ class MyWindow(QtWidgets.QDialog):
 
         self.columns_combo.addItems([row.COLUMN_NAME for row in tresults])
 
-        self.operator_combo.addItems(['=', '>', '<', '>=', '<=', 'NOT EQUAL', 'IN', 'LIKE'])
+        self.operator_combo.addItems(['=', 'LIKE', 'IN', '>', '<', '>=', '<=', '<>'])
 
     def generate(self):
         self.q_textEdit.clear()
-        self.q_textEdit.setText('SELECT')
+        if self.operator_combo.currentText()=='LIKE':
+            self.q_textEdit.setText("SELECT * FROM {table} WHERE {column} {operator} '{a}{criteria}{a}'".format(
+                table=self.table_combo.currentText(),
+                column=self.columns_combo.currentText(),
+                operator=self.operator_combo.currentText(),
+                a='%',
+                criteria=self.cr_lineEdit.text()))
+        elif self.operator_combo.currentText()=='=' and self.cr_lineEdit.text().isdigit()==False:
+            self.q_textEdit.setText("SELECT * FROM {table} WHERE {column} {operator} '{criteria}'".format(table=self.table_combo.currentText(),
+                                                                                                    column=self.columns_combo.currentText(),
+                                                                                                    operator=self.operator_combo.currentText(),
+                                                                                                    criteria=self.cr_lineEdit.text()))
+        else:
+            self.q_textEdit.setText("SELECT * FROM {table} WHERE {column} {operator} {criteria}".format(table=self.table_combo.currentText(),
+                                                                                                    column=self.columns_combo.currentText(),
+                                                                                                    operator=self.operator_combo.currentText(),
+                                                                                                    criteria=self.cr_lineEdit.text()))
+
 
     def run(self):
         pass
