@@ -20,9 +20,9 @@ class MyWindow(QtWidgets.QDialog):
         #Connect object functions
         self.server_combo.currentTextChanged.connect(self.list_db)
         self.connect_button.clicked.connect(self.connect)
+        self.table_combo.activated.connect(self.list_columns)
         self.generate_button.clicked.connect(self.generate)
         self.run_button.clicked.connect(self.run)
-        self.table_combo.currentTextChanged.connect(self.list_columns)
 
     def list_db(self):
         self.db_combo.clear()
@@ -75,6 +75,7 @@ class MyWindow(QtWidgets.QDialog):
         #     tables.append(row.table_name)
         #
         self.table_combo.clear()
+
         self.table_combo.addItems([row.table_name for row in cursor.tables()])
 
         # columns=[]
@@ -94,14 +95,17 @@ class MyWindow(QtWidgets.QDialog):
 
         tcursor = connection.cursor()
 
-        tcursor.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS (NOLOCK) WHERE TABLE_NAME = N'{table_name}'".format(table_name=self.table_combo.currentText))
+        tcursor.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS (NOLOCK) WHERE TABLE_NAME = N'{table_name}'".format(table_name=self.table_combo.currentText()))
 
         tresults = tcursor.fetchall()
 
-        self.columns_combo.addItems(tresults)
+        self.columns_combo.addItems([row.COLUMN_NAME for row in tresults])
+
+        self.operator_combo.addItems(['=', '>', '<', '>=', '<=', 'NOT EQUAL', 'IN', 'LIKE'])
 
     def generate(self):
-        pass
+        self.q_textEdit.clear()
+        self.q_textEdit.setText('SELECT')
 
     def run(self):
         pass
