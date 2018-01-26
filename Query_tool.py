@@ -17,8 +17,11 @@ class MyWindow(QtWidgets.QDialog):
         #Fill server combo
         self.server_combo.addItems([elem.attrib['name'] for elem in eroot])
 
+        self.q_textEdit.setEnabled(False)
+        self.q_textEdit.setText('Please connect to a server first to edit query')
+
         #Connect object functions
-        self.server_combo.currentTextChanged.connect(self.list_db)
+        self.server_combo.activated.connect(self.list_db)
         self.connect_button.clicked.connect(self.connect)
         self.table_combo.activated.connect(self.list_columns)
         self.generate_button.clicked.connect(self.generate)
@@ -49,6 +52,8 @@ class MyWindow(QtWidgets.QDialog):
 
     def connect(self):
         global connection
+        global cursor
+        self.q_textEdit.clear()
         connection = pyodbc.connect('Driver=SQL Server;''Server={a};''Database={b};''uid={c};pwd={d};'.format(
                                                                                   a='{e}'.format(e= eroot.findall(
                                                                                       ".//*[@name='{f}']/connection".format(
@@ -77,6 +82,8 @@ class MyWindow(QtWidgets.QDialog):
         self.table_combo.clear()
 
         self.table_combo.addItems([row.table_name for row in cursor.tables()])
+
+        self.q_textEdit.setEnabled(True)
 
         # columns=[]
 
@@ -118,14 +125,18 @@ class MyWindow(QtWidgets.QDialog):
                                                                                                     operator=self.operator_combo.currentText(),
                                                                                                     criteria=self.cr_lineEdit.text()))
         else:
-            self.q_textEdit.setText("SELECT * FROM {table} WHERE {column} {operator} {criteria}".format(table=self.table_combo.currentText(),
+            self.q_textEdit.setText("SELECT * FROM {table} (NOLOCK) WHERE {column} {operator} {criteria}".format(table=self.table_combo.currentText(),
                                                                                                     column=self.columns_combo.currentText(),
                                                                                                     operator=self.operator_combo.currentText(),
                                                                                                     criteria=self.cr_lineEdit.text()))
 
-
     def run(self):
-        pass
+        cursor.execute(self.q_textEdit.toPlainText())
+        qresults=cursor.fetchall()
+        print(qresults)
+        # data_tableWidget.setRowCount()
+        # setColumnCount()
+        # setItem()
 
     def gentables(self):
         pass
