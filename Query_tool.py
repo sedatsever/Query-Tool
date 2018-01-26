@@ -133,8 +133,27 @@ class MyWindow(QtWidgets.QDialog):
     def run(self):
         cursor.execute(self.q_textEdit.toPlainText())
         qresults=cursor.fetchall()
-        print(qresults)
-        # data_tableWidget.setRowCount()
+        row_count=0
+
+        print(qresults[0][1])
+
+        for rows in iter(qresults):
+            row_count+=1
+
+        self.d_tableWidget.setRowCount(row_count)
+
+        column_count = len([column[0] for column in cursor.description])
+
+        self.d_tableWidget.setColumnCount(column_count)
+
+        # self.d_tableWidget.setItem(row_count,0,qresults[1][0])
+
+        # for row in range(row_count):
+        #     for column in range(column_count):
+        #         self.d_tableWidget.setItem(row, column, QTableWidgetItem(QString("%1").arg(array[row][column])))
+
+
+            # data_tableWidget.setRowCount()
         # setColumnCount()
         # setItem()
 
