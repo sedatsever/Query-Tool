@@ -1,6 +1,7 @@
 import sys
 import pyodbc
 from PyQt5 import QtGui, QtWidgets, QtCore,  uic
+from PyQt5.QtWidgets import *
 import xml.etree.ElementTree as ET
 
 etree = ET.parse(r'C:\Users\tradesoft\PycharmProjects\Query Tool\.idea\environments.xml')
@@ -18,6 +19,14 @@ class MyWindow(QtWidgets.QDialog):
         self.server_combo.addItems([elem.attrib['name'] for elem in eroot])
 
         self.q_textEdit.setEnabled(False)
+        self.table_combo.setEnabled(False)
+        self.columns_combo.setEnabled(False)
+        self.operator_combo.setEnabled(False)
+        self.cr_lineEdit.setEnabled(False)
+        self.generate_button.setEnabled(False)
+        self.error_label.setEnabled(False)
+
+
         self.q_textEdit.setText('Please connect to a server first to edit query')
 
         #Connect object functions
@@ -84,6 +93,11 @@ class MyWindow(QtWidgets.QDialog):
         self.table_combo.addItems([row.table_name for row in cursor.tables()])
 
         self.q_textEdit.setEnabled(True)
+        self.table_combo.setEnabled(True)
+        self.columns_combo.setEnabled(True)
+        self.operator_combo.setEnabled(True)
+        self.cr_lineEdit.setEnabled(True)
+        self.generate_button.setEnabled(True)
 
         # columns=[]
 
@@ -120,7 +134,7 @@ class MyWindow(QtWidgets.QDialog):
                 a='%',
                 criteria=self.cr_lineEdit.text()))
         elif self.operator_combo.currentText()=='=' and self.cr_lineEdit.text().isdigit()==False:
-            self.q_textEdit.setText("SELECT * FROM {table} WHERE {column} {operator} '{criteria}'".format(table=self.table_combo.currentText(),
+            self.q_textEdit.setText("SELECT * FROM {table} (NOLOCK)  WHERE {column} {operator} '{criteria}'".format(table=self.table_combo.currentText(),
                                                                                                     column=self.columns_combo.currentText(),
                                                                                                     operator=self.operator_combo.currentText(),
                                                                                                     criteria=self.cr_lineEdit.text()))
@@ -131,8 +145,24 @@ class MyWindow(QtWidgets.QDialog):
                                                                                                     criteria=self.cr_lineEdit.text()))
 
     def run(self):
-        cursor.execute(self.q_textEdit.toPlainText())
-        qresults=cursor.fetchall()
+        # msg = QMessageBox()
+        # msg.setIcon(QMessageBox.Warning)
+        # msg.setText("Please check yor query")
+        # msg.setWindowTitle("Syntax Error")
+        # msg.setStandardButtons(QMessageBox.Ok)
+        # msg.buttonClicked.connect(self.connect())
+
+        while True:
+            # try:
+            #     cursor.execute(self.q_textEdit.toPlainText())
+            #
+            # except:
+            #     self.error_label.setEnabled(True)
+            #
+            # else:
+            #     self.error_label.setEnabled(False)
+            #     break
+
         row_count=0
 
         print(qresults[0][1])
@@ -146,11 +176,15 @@ class MyWindow(QtWidgets.QDialog):
 
         self.d_tableWidget.setColumnCount(column_count)
 
+        self.d_tableWidget.setItem(1, 1, QTableWidgetItem(str(qresults[1][0])))
+
+        self.d_tableWidget.resizeColumnsToContents()
+
         # self.d_tableWidget.setItem(row_count,0,qresults[1][0])
 
         # for row in range(row_count):
         #     for column in range(column_count):
-        #         self.d_tableWidget.setItem(row, column, QTableWidgetItem(QString("%1").arg(array[row][column])))
+        #         self.d_tableWidget.setItem(row, column, QTableWidgetItem(QString("%1").arg(qresults[row][column])))
 
 
             # data_tableWidget.setRowCount()
