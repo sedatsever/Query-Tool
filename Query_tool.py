@@ -24,8 +24,7 @@ class MyWindow(QtWidgets.QDialog):
         self.operator_combo.setEnabled(False)
         self.cr_lineEdit.setEnabled(False)
         self.generate_button.setEnabled(False)
-        self.error_label.setEnabled(False)
-
+        self.error_label.hide()
 
         self.q_textEdit.setText('Please connect to a server first to edit query')
 
@@ -152,16 +151,16 @@ class MyWindow(QtWidgets.QDialog):
         # msg.setStandardButtons(QMessageBox.Ok)
         # msg.buttonClicked.connect(self.connect())
 
-        while True:
-            # try:
-            #     cursor.execute(self.q_textEdit.toPlainText())
-            #
-            # except:
-            #     self.error_label.setEnabled(True)
-            #
-            # else:
-            #     self.error_label.setEnabled(False)
-            #     break
+        # try:
+        #     cursor.execute(self.q_textEdit.toPlainText())
+        # except:
+        #     self.error_label.show
+        # else:
+        #     self.error_label.hide()
+
+        cursor.execute(self.q_textEdit.toPlainText())
+
+        qresults = cursor.fetchall()
 
         row_count=0
 
@@ -176,7 +175,7 @@ class MyWindow(QtWidgets.QDialog):
 
         self.d_tableWidget.setColumnCount(column_count)
 
-        self.d_tableWidget.setItem(1, 1, QTableWidgetItem(str(qresults[1][0])))
+        # self.d_tableWidget.setItem(1, 1, QTableWidgetItem(str(qresults[0][1])))
 
         self.d_tableWidget.resizeColumnsToContents()
 
@@ -186,10 +185,10 @@ class MyWindow(QtWidgets.QDialog):
         #     for column in range(column_count):
         #         self.d_tableWidget.setItem(row, column, QTableWidgetItem(QString("%1").arg(qresults[row][column])))
 
+        for row in range(row_count):
+            for column in range(column_count):
+                self.d_tableWidget.setItem(row, column, QTableWidgetItem(str(qresults[row][column])))
 
-            # data_tableWidget.setRowCount()
-        # setColumnCount()
-        # setItem()
 
     def gentables(self):
         pass
