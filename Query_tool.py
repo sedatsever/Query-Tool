@@ -154,17 +154,22 @@ class MyWindow(QtWidgets.QDialog):
         # try:
         #     cursor.execute(self.q_textEdit.toPlainText())
         # except:
+        #     self.error_label.show()
+        #     self.connect()
+        # else:
+        #     self.error_label.hide()
+
         #     self.error_label.show
         # else:
         #     self.error_label.hide()
+
+        self.error_label.show()
 
         cursor.execute(self.q_textEdit.toPlainText())
 
         qresults = cursor.fetchall()
 
         row_count=0
-
-        print(qresults[0][1])
 
         for rows in iter(qresults):
             row_count+=1
@@ -174,6 +179,8 @@ class MyWindow(QtWidgets.QDialog):
         column_count = len([column[0] for column in cursor.description])
 
         self.d_tableWidget.setColumnCount(column_count)
+
+        self.d_tableWidget.setHorizontalHeaderLabels([column[0] for column in cursor.description])
 
         # self.d_tableWidget.setItem(1, 1, QTableWidgetItem(str(qresults[0][1])))
 
