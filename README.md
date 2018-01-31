@@ -1,5 +1,5 @@
 # Query-Tool
-A simple SQL query tool that generates SQL "select" statements by user input and connects to SQL server to retrieve data.
+A visual tool to simplify retrieving SQL data by generating "select" statements from user input.
 
 # Manual
 1. Open the config.xml file with notepad. This xml file keeps the servers you wish to connect and their authentication information. Fill the required data like the example below:
