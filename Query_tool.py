@@ -1,7 +1,8 @@
-import sys
+import sys, csv, io
 import pyodbc
 from PyQt5 import QtGui, QtWidgets, QtCore,  uic
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
 import xml.etree.ElementTree as ET
 
 etree = ET.parse(r'C:\Users\tradesoft\PycharmProjects\Query Tool\.idea\environments.xml')
@@ -17,6 +18,8 @@ class MyWindow(QtWidgets.QDialog):
 
         #Fill server combo
         self.server_combo.addItems([elem.attrib['name'] for elem in eroot])
+
+        self.d_tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)
 
         self.q_textEdit.setEnabled(False)
         self.table_combo.setEnabled(False)
@@ -34,6 +37,7 @@ class MyWindow(QtWidgets.QDialog):
         self.table_combo.activated.connect(self.list_columns)
         self.generate_button.clicked.connect(self.generate)
         self.run_button.clicked.connect(self.run)
+        self.d_tableWidget.customContextMenuRequested.connect(self.openMenu)
 
     def list_db(self):
         self.db_combo.clear()
@@ -196,11 +200,36 @@ class MyWindow(QtWidgets.QDialog):
             for column in range(column_count):
                 self.d_tableWidget.setItem(row, column, QTableWidgetItem(str(qresults[row][column])))
 
+    def openMenu(self,position):
+        menu = QMenu()
+        quitAction = menu.addAction("Copy")
+        action = menu.exec_(self.mapToGlobal(position))
+        # if action == quitAction:
+        self.copyaction()
 
-    def gentables(self):
-        pass
-        #for row in cursor.tables():
-         #   yield row.table_name
+    def copyaction(self):
+        selection = self.d_tableWidget.selectedIndexes()
+        if selection:
+            rows = sorted(index.row() for index in selection)
+            columns = sorted(index.column() for index in selection)
+            rowcount = rows[-1] - rows[0] + 1
+            colcount = columns[-1] - columns[0] + 1
+            table = [[''] * colcount for _ in range(rowcount)]
+            for index in selection:
+                row = index.row() - rows[0]
+                column = index.column() - columns[0]
+                table[row][column] = index.data()
+            stream = io.StringIO()
+            csv.writer(stream).writerows(table)
+            QApplication.clipboard().setText(stream.getvalue())
+        # cb = QApplication.clipboard()
+        # cb.clear(mode=cb.Clipboard)
+        # cb.setText(str(self.d_tableWidget.selectedIndexes()), mode=cb.Clipboard)
+        #
+        # print(self.d_tableWidget.selectedItems())
+
+
+
 
 
 # class Session:
