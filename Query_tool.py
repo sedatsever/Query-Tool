@@ -202,12 +202,15 @@ class MyWindow(QtWidgets.QDialog):
 
     def openMenu(self,position):
         menu = QMenu()
-        quitAction = menu.addAction("Copy")
+        copydataAction = menu.addAction("Copy Data")
+        copyheadersAction = menu.addAction("Copy Headers")
         action = menu.exec_(self.mapToGlobal(position))
-        # if action == quitAction:
-        self.copyaction()
+        if action == copydataAction:
+            self.copydata()
+        if action == copyheadersAction:
+            self.copyheaders()
 
-    def copyaction(self):
+    def copydata(self):
         selection = self.d_tableWidget.selectedIndexes()
         if selection:
             rows = sorted(index.row() for index in selection)
@@ -227,6 +230,12 @@ class MyWindow(QtWidgets.QDialog):
         # cb.setText(str(self.d_tableWidget.selectedIndexes()), mode=cb.Clipboard)
         #
         # print(self.d_tableWidget.selectedItems())
+
+    def copyheaders(self):
+        headers_lst=[column[0] for column in cursor.description]
+        headers_str=",".join(headers_lst)
+        QApplication.clipboard().setText(headers_str)
+
 
 
 
