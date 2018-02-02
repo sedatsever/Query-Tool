@@ -204,7 +204,7 @@ class MyWindow(QtWidgets.QDialog):
         menu = QMenu()
         copydataAction = menu.addAction("Copy Data")
         copyheadersAction = menu.addAction("Copy Headers")
-        action = menu.exec_(self.mapToGlobal(position))
+        action = menu.exec_(self.d_tableWidget.mapToGlobal(position))
         if action == copydataAction:
             self.copydata()
         if action == copyheadersAction:
