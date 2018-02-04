@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 import xml.etree.ElementTree as ET
 
-etree = ET.parse(r'C:\Users\tradesoft\PycharmProjects\Query Tool\.idea\environments.xml')
+etree = ET.parse(r'C:\Users\Sedat\PycharmProjects\Smart Query\.idea\environments.xml')
 
 eroot = etree.getroot()
 
@@ -27,7 +27,10 @@ class MyWindow(QtWidgets.QDialog):
         self.operator_combo.setEnabled(False)
         self.cr_lineEdit.setEnabled(False)
         self.generate_button.setEnabled(False)
-        self.error_label.hide()
+        self.run_button.setEnabled(False)
+
+        self.cnxn_error_label.hide()
+        self.qry_error_label.hide()
 
         self.q_textEdit.setText('Please connect to a server first to edit query')
 
@@ -101,6 +104,7 @@ class MyWindow(QtWidgets.QDialog):
         self.operator_combo.setEnabled(True)
         self.cr_lineEdit.setEnabled(True)
         self.generate_button.setEnabled(True)
+        self.run_button.setEnabled(True)
 
         # columns=[]
 
