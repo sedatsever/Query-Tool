@@ -3,7 +3,7 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
 
 # Getting Started
 1. Open the "config.xml" file with a text editor like notepad. This file keeps the servers you wish to connect and their authentication information. 
-2. For each server you wish to connect, you need to insert a block lie below into the config.xml. Fill the required data like below:
+2. For each server you wish to connect, you need to insert a block like below into the config.xml. Fill the required fields as stated below:
 
 ```
     <environment name="Enter your server title here">
@@ -22,7 +22,7 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
 5. You may also use the generate feature. For this, you need to select a table, column, operator and enter criteria. The sql staement will automatically be generated in the query box. Again, hit "Run" to retrieve data.
 
 ## Built With
-
+* [Python](https://www.python.org/) - Coding language
 * [Pyodbc](https://github.com/mkleehammer/pyodbc) - The sql framework used
 * [Pyqt5](https://riverbankcomputing.com/software/pyqt/intro) - Used fur UI
 * [ElementTree](https://docs.python.org/2/library/xml.etree.elementtree.html) - Used for xml
