@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>536</width>
-    <height>607</height>
+    <height>616</height>
    </rect>
   </property>
   <property name="mouseTracking">
    <bool>false</bool>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Query Tool</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -26,14 +26,14 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Server</string>
+         <string>Select a Server:</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Database</string>
+         <string>Select a Database</string>
         </property>
        </widget>
       </item>
@@ -48,26 +48,17 @@
        <widget class="QComboBox" name="db_combo"/>
       </item>
       <item row="1" column="0">
-       <widget class="QComboBox" name="server_combo"/>
+       <widget class="QComboBox" name="server_combo">
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
      <item>
       <widget class="QLabel" name="cnxn_error_label">
        <property name="font">
@@ -78,7 +69,14 @@
         </font>
        </property>
        <property name="text">
-        <string>Could not connect</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Could not connect to server&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="cnxn_label">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00aa00;&quot;&gt;Connected&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -92,23 +90,23 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="0">
-         <widget class="QComboBox" name="table_combo"/>
-        </item>
         <item row="1" column="1">
          <widget class="QComboBox" name="columns_combo"/>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Table</string>
-          </property>
-         </widget>
+        <item row="1" column="0">
+         <widget class="QComboBox" name="table_combo"/>
         </item>
         <item row="0" column="1">
          <widget class="QLabel" name="label_5">
           <property name="text">
            <string>Columns</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Table</string>
           </property>
          </widget>
         </item>
@@ -210,7 +208,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Please check your query!</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Please check your query&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -241,6 +239,12 @@
           <width>0</width>
           <height>150</height>
          </size>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
