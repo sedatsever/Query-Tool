@@ -3,7 +3,7 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
 
 # Getting Started
 1. Open the "config.xml" file with a text editor like notepad. This file keeps the servers you wish to connect and their authentication information. 
-2. For each server you wish to connect, fill the required data like below:
+2. For each server you wish to connect, you need to insert a block lie below into the config.xml. Fill the required data like below:
 
 ```
     <environment name="Enter your server title here">
@@ -13,13 +13,19 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
         <pass>Enter password here</pass>
     </environment>
 ```
-2. Open "Query_tool.exe". 
+
+# Manual
+1. Open "Query_tool.exe"
+2. First select a server from the "Servers" combo box. You have to click on a server to connect and list databases.
+3. When you successfully connect to the servers, databases are listed on the right. Select a database and click connect.
+4. When you are conencted, you may directly write your sql statement in the "Query" box and hit "Run" to retrieve data.
+5. You may also use the generate feature. For this, you need to select a table, column, operator and enter criteria. The sql staement will automatically be generated in the query box. Again, hit "Run" to retrieve data.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Pyodbc](https://github.com/mkleehammer/pyodbc) - The sql framework used
+* [Pyqt5](https://riverbankcomputing.com/software/pyqt/intro) - Used fur UI
+* [ElementTree](https://docs.python.org/2/library/xml.etree.elementtree.html) - Used for xml
 
 ## Contributing
 
@@ -29,11 +35,9 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
-## Authors
+## Author
 
-* **Sedat Sever** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Sedat Sever** - *Initial work* - [sedatsever](https://github.com/sedatsever)
 
 ## License
 
@@ -41,6 +45,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+* The author will not be held responsible for any damage caused by using this software.
