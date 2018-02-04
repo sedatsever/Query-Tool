@@ -6,76 +6,14 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
 2. For each server you wish to connect, fill the required data like below:
 
 ```
-    <environment name="lara">
-        <connection>SEDAT\SQLEXPRESS</connection>
-        <db>master</db>
-        <id>lara</id>
-        <pass>lara</pass>
+    <environment name="Enter your server title here">
+        <server>Enter your server address here</server>
+        <db>Enter a database in server here</db>
+        <id>Enter user id here</id>
+        <pass>Enter password here</pass>
     </environment>
 ```
-
-
-    
 2. Open "Query_tool.exe". 
-
-
-# Project Title
-
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
@@ -93,7 +31,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Sedat Sever** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
