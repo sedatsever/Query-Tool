@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<environments>
+    <server name="server1">
+        <server>server_address1</server>
+        <db>db1</db>
+        <id>id1</id>
+        <pass>password1</pass>
+    </server>
+    <server name="server2">
+        <server>server_address2</server>
+        <db>db2</db>
+        <id>id2</id>
+        <pass>password2</pass>
+    </server>
+    <server name="server3">
+        <server>server_address3</server>
+        <db>db3</db>
+        <id>id3</id>
+        <pass>password13</pass>
+    </server>
+</environments>
