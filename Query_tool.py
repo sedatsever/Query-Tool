@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 import xml.etree.ElementTree as ET
 
-etree = ET.parse(r'C:\Users\Sedat\PycharmProjects\Smart Query\.idea\environments.xml')
+etree = ET.parse(r'C:\Users\Sedat\PycharmProjects\Smart Query\.idea\config.xml')
 
 eroot = etree.getroot()
 
@@ -28,7 +28,7 @@ class MyWindow(QtWidgets.QDialog):
         self.qry_error_label.hide()
         self.cnxn_label.hide()
 
-        self.q_textEdit.setText('Please connect to a server to generate or manually input a query')
+        # self.q_textEdit.setText('Please connect to a server to generate or manually input a query')
 
         #Connect object functions
         self.server_combo.activated.connect(self.list_db)
@@ -45,7 +45,7 @@ class MyWindow(QtWidgets.QDialog):
         try:
             db_connection = pyodbc.connect('Driver=SQL Server;''Server={a};''Database={j};''uid={b};pwd={c};'.format(
                                                                                   a = '{d}'.format(d = eroot.findall(
-                                                                                      ".//*[@name='{e}']/connection".format(
+                                                                                      ".//*[@name='{e}']/server".format(
                                                                                           e = self.server_combo.currentText()))[0].text),
                                                                                   b = '{f}'.format(f = eroot.findall(
                                                                                       ".//*[@name='{g}']/id".format(
@@ -78,7 +78,7 @@ class MyWindow(QtWidgets.QDialog):
         try:
             connection = pyodbc.connect('Driver=SQL Server;''Server={a};''Database={b};''uid={c};pwd={d};'.format(
                                                                                   a='{e}'.format(e= eroot.findall(
-                                                                                      ".//*[@name='{f}']/connection".format(
+                                                                                      ".//*[@name='{f}']/server".format(
                                                                                           f=self.server_combo.currentText()))[0].text),
                                                                                   b = self.db_combo.currentText(),
                                                                                   c = '{g}'.format(g = eroot.findall(
@@ -88,7 +88,7 @@ class MyWindow(QtWidgets.QDialog):
                                                                                       ".//*[@name='{j}']/pass".format(
                                                                                           j = self.server_combo.currentText()))[0].text)))
         except:
-            self.qry_error_label.show()
+            self.cnxn_error_label.show()
             self.cnxn_label.hide()
             self.makepassive()
 
@@ -110,7 +110,7 @@ class MyWindow(QtWidgets.QDialog):
 
             self.qry_error_label.hide()
             self.cnxn_label.show()
-            self.q_textEdit.clear()
+            # self.q_textEdit.clear()
 
     def list_columns(self):
         self.columns_combo.clear()
@@ -214,6 +214,7 @@ class MyWindow(QtWidgets.QDialog):
         self.cr_lineEdit.setEnabled(False)
         self.generate_button.setEnabled(False)
         self.run_button.setEnabled(False)
+        self.d_tableWidget.setEnabled(False)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
