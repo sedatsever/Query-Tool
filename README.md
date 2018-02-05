@@ -17,9 +17,9 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
 # Manual
 1. Open "Query_tool.exe"
 2. First select a server from the "Servers" combo box. You have to click on a server to connect and list databases.
-3. When you successfully connect to the servers, databases are listed on the right. Select a database and click connect.
-4. When you are conencted, you may directly write your sql statement in the "Query" box and hit "Run" to retrieve data.
-5. You may also use the generate feature. For this, you need to select a table, column, operator and enter criteria. The sql staement will automatically be generated in the query box. Again, hit "Run" to retrieve data.
+3. When you successfully connect to the server, databases are listed on the right. Select a database and click on connect button.
+4. When you are conencted to the database, you may directly write your sql statement in the "Query" box and hit "Run" to retrieve data.
+5. You may also use the generate feature. To do so, select a table, column, operator and enter criteria. The sql staement will be automatically generated in the query box.
 
 ## Built With
 * [Python](https://www.python.org/) - Coding language
