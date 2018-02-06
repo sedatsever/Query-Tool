@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 import xml.etree.ElementTree as ET
 
-etree = ET.parse(r'C:\Users\Sedat\PycharmProjects\Smart Query\.idea\config.xml')
+etree = ET.parse(r'config.xml')
 
 eroot = etree.getroot()
 
@@ -13,7 +13,7 @@ class MyWindow(QtWidgets.QDialog):
     def __init__(self, fn=None,parent=None):
         super(MyWindow, self).__init__(parent,\
         flags = Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint )
-        uic.loadUi('Smart_query_tool.ui', self)
+        uic.loadUi('query_tool_ui.ui', self)
 
         self.show()
 
@@ -123,7 +123,7 @@ class MyWindow(QtWidgets.QDialog):
 
         self.columns_combo.addItems([row.COLUMN_NAME for row in tresults])
 
-        self.operator_combo.addItems(['=', 'LIKE', 'IN', '>', '<', '>=', '<=', '<>'])
+        self.operator_combo.addItems(['=', 'LIKE', 'IN', '<>', '>', '<', '>=', '<='])
 
     def generate(self):
         self.q_textEdit.clear()
@@ -134,7 +134,7 @@ class MyWindow(QtWidgets.QDialog):
                 operator=self.operator_combo.currentText(),
                 a='%',
                 criteria=self.cr_lineEdit.text()))
-        elif self.operator_combo.currentText()=='=' and self.cr_lineEdit.text().isdigit()==False:
+        elif any([self.operator_combo.currentText()=='=' , self.operator_combo.currentText()=='<>']) and self.cr_lineEdit.text().isdigit()==False:
             self.q_textEdit.setText("SELECT * FROM {table} (NOLOCK)  WHERE {column} {operator} '{criteria}'".format(table=self.table_combo.currentText(),
                                                                                                     column=self.columns_combo.currentText(),
                                                                                                     operator=self.operator_combo.currentText(),
@@ -214,7 +214,6 @@ class MyWindow(QtWidgets.QDialog):
         self.cr_lineEdit.setEnabled(False)
         self.generate_button.setEnabled(False)
         self.run_button.setEnabled(False)
-        self.d_tableWidget.setEnabled(False)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
