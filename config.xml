@@ -16,6 +16,6 @@
         <server>server_address3</server>
         <db>db3</db>
         <id>id3</id>
-        <pass>password13</pass>
+        <pass>password3</pass>
     </server>
 </environments>
