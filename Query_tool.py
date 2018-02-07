@@ -1,4 +1,5 @@
 import sys, csv, io
+import decimal
 import pyodbc
 from PyQt5 import QtGui, QtWidgets, QtCore,  uic
 from PyQt5.QtWidgets import *

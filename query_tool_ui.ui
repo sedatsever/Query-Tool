@@ -45,7 +45,11 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="db_combo"/>
+       <widget class="QComboBox" name="db_combo">
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QComboBox" name="server_combo">
@@ -91,10 +95,18 @@
       <item>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="1" column="1">
-         <widget class="QComboBox" name="columns_combo"/>
+         <widget class="QComboBox" name="columns_combo">
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QComboBox" name="table_combo"/>
+         <widget class="QComboBox" name="table_combo">
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="0" column="1">
          <widget class="QLabel" name="label_5">
