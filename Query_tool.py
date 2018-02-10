@@ -21,6 +21,10 @@ class MyWindow(QtWidgets.QDialog):
         #Fill server combo
         self.server_combo.addItems([elem.attrib['name'] for elem in eroot])
 
+        self.server_combo.clearEditText()
+
+        self.operator_combo.addItems(['=', 'LIKE', 'IN', '<>', '>', '<', '>=', '<='])
+
         self.d_tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)
 
         self.makepassive()
@@ -32,12 +36,24 @@ class MyWindow(QtWidgets.QDialog):
         # self.q_textEdit.setText('Please connect to a server to generate or manually input a query')
 
         #Connect object functions
-        self.server_combo.activated.connect(self.list_db)
+        self.server_combo.currentIndexChanged.connect(self.list_db)
         self.connect_button.clicked.connect(self.connect)
-        self.table_combo.activated.connect(self.list_columns)
+        self.table_combo.currentIndexChanged.connect(self.list_columns)
         self.generate_button.clicked.connect(self.generate)
         self.run_button.clicked.connect(self.run)
         self.d_tableWidget.customContextMenuRequested.connect(self.openMenu)
+
+        self.setTabOrder(self.server_combo, self.db_combo)
+        self.setTabOrder(self.db_combo, self.connect_button)
+
+        self.setTabOrder(self.table_combo, self.columns_combo)
+        self.setTabOrder(self.columns_combo, self.operator_combo)
+        self.setTabOrder(self.operator_combo, self.cr_lineEdit)
+        self.setTabOrder(self.cr_lineEdit, self.generate_button)
+
+        self.setTabOrder(self.q_textEdit, self.run_button)
+
+        self.setTabOrder(self.q_textEdit, self.run_button)
 
     def list_db(self):
         self.cnxn_error_label.hide()
@@ -97,6 +113,8 @@ class MyWindow(QtWidgets.QDialog):
             global cursor
             cursor = connection.cursor()
 
+            self.cnxn_error_label.hide()
+
             self.table_combo.clear()
 
             self.table_combo.addItems([row.table_name for row in cursor.tables()])
@@ -111,7 +129,6 @@ class MyWindow(QtWidgets.QDialog):
 
             self.qry_error_label.hide()
             self.cnxn_label.show()
-            # self.q_textEdit.clear()
 
     def list_columns(self):
         self.columns_combo.clear()
@@ -124,8 +141,6 @@ class MyWindow(QtWidgets.QDialog):
 
         self.columns_combo.addItems([row.COLUMN_NAME for row in tresults])
 
-        self.operator_combo.addItems(['=', 'LIKE', 'IN', '<>', '>', '<', '>=', '<='])
-
     def generate(self):
         self.q_textEdit.clear()
         if self.operator_combo.currentText()=='LIKE':
@@ -135,7 +150,7 @@ class MyWindow(QtWidgets.QDialog):
                 operator=self.operator_combo.currentText(),
                 a='%',
                 criteria=self.cr_lineEdit.text()))
-        elif any([self.operator_combo.currentText()=='=' , self.operator_combo.currentText()=='<>']) and self.cr_lineEdit.text().isdigit()==False:
+        elif any([self.operator_combo.currentText()=='=' , self.operator_combo.currentText()=='<>']):
             self.q_textEdit.setText("SELECT * FROM {table} (NOLOCK)  WHERE {column} {operator} '{criteria}'".format(table=self.table_combo.currentText(),
                                                                                                     column=self.columns_combo.currentText(),
                                                                                                     operator=self.operator_combo.currentText(),
