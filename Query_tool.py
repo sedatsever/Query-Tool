@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+
+__author__ = "Sedat Sever"
+__copyright__ = "Copyright 2018, Query Tool Project"
+__credits__ = ["Sedat Sever"]
+__license__ = "MIT"
+__version__ = "1.5"
+__maintainer__ = "Sedat Sever"
+__email__ = "sedatsever@gmail.com"
+__status__ = "Production"
+
 import sys, csv, io
 import decimal
 import pyodbc
@@ -20,6 +31,7 @@ class MyWindow(QtWidgets.QDialog):
 
         #Fill server combo
         self.server_combo.addItems([elem.attrib['name'] for elem in eroot])
+        self.server_combo.model().sort(0)
 
         self.server_combo.clearEditText()
 
@@ -33,16 +45,15 @@ class MyWindow(QtWidgets.QDialog):
         self.qry_error_label.hide()
         self.cnxn_label.hide()
 
-        # self.q_textEdit.setText('Please connect to a server to generate or manually input a query')
-
         #Connect object functions
-        self.server_combo.currentIndexChanged.connect(self.list_db)
+        self.server_combo.activated.connect(self.list_db)
         self.connect_button.clicked.connect(self.connect)
-        self.table_combo.currentIndexChanged.connect(self.list_columns)
+        self.table_combo.activated.connect(self.list_columns)
         self.generate_button.clicked.connect(self.generate)
         self.run_button.clicked.connect(self.run)
         self.d_tableWidget.customContextMenuRequested.connect(self.openMenu)
 
+        #Set tab order
         self.setTabOrder(self.server_combo, self.db_combo)
         self.setTabOrder(self.db_combo, self.connect_button)
 
@@ -86,6 +97,8 @@ class MyWindow(QtWidgets.QDialog):
             dbrows = dbcursor.fetchall()
 
             self.db_combo.addItems([row.name for row in dbrows])
+
+            self.db_combo.model().sort(0)
 
             self.cnxn_error_label.hide()
 
