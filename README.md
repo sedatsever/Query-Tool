@@ -13,6 +13,7 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
         <pass>Enter password here</pass>
     </environment>
 ```
+Note: Only use English characters in config file
 
 # Manual
 1. Open "Query_tool.exe"
