@@ -37,6 +37,8 @@ class MyWindow(QtWidgets.QDialog):
 
         self.operator_combo.addItems(['=', 'LIKE', 'IN', '<>', '>', '<', '>=', '<='])
 
+        self.d_tableWidget.setSortingEnabled(False)
+
         self.d_tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)
 
         self.makepassive()
@@ -123,7 +125,7 @@ class MyWindow(QtWidgets.QDialog):
             self.makepassive()
 
         else:
-            global cursor
+            # global cursor
             cursor = connection.cursor()
 
             self.cnxn_error_label.hide()
@@ -175,14 +177,15 @@ class MyWindow(QtWidgets.QDialog):
                                                                                                     criteria=self.cr_lineEdit.text()))
 
     def run(self):
+        rcursor=connection.cursor()
         try:
-            cursor.execute(self.q_textEdit.toPlainText())
+            rcursor.execute(self.q_textEdit.toPlainText())
 
         except:
             self.qry_error_label.show()
 
         else:
-            qresults = cursor.fetchall()
+            qresults = rcursor.fetchall()
 
             row_count=0
 
@@ -191,11 +194,11 @@ class MyWindow(QtWidgets.QDialog):
 
             self.d_tableWidget.setRowCount(row_count)
 
-            column_count = len([column[0] for column in cursor.description])
+            column_count = len([column[0] for column in rcursor.description])
 
             self.d_tableWidget.setColumnCount(column_count)
 
-            self.d_tableWidget.setHorizontalHeaderLabels([column[0] for column in cursor.description])
+            self.d_tableWidget.setHorizontalHeaderLabels([column[0] for column in rcursor.description])
 
             for row in range(row_count):
                 for column in range(column_count):
