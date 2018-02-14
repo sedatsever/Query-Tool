@@ -6,7 +6,7 @@ A visual tool to simplify retrieving SQL data by generating "select" statements 
 2. For each server you wish to connect, you need to insert a block like below into the config.xml. Fill the required fields as stated below:
 
 ```
-    <environment name="Enter your server title here">
+    <environment name="Enter your server title in double quotes here">
         <server>Enter your server address here</server>
         <db>Enter a database in server here</db>
         <id>Enter user id here</id>
