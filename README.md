@@ -39,7 +39,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Author
 
-* **Sedat Sever** - *Initial work* - [sedatsever](https://github.com/sedatsever)
+**Sedat Sever** - *Initial work* - [sedatsever](https://github.com/sedatsever)
 
 ## License
 
