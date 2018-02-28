@@ -47,4 +47,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* The author will not be held responsible for any damage caused by using this software.
+The author will not be held responsible for any damage caused by using this software.
