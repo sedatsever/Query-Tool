@@ -20,7 +20,7 @@ Note: Only use English characters in config file
 2. First select a server from the "Servers" combo box. You have to click on a server to connect and list databases.
 3. When you successfully connect to the server, databases are listed on the right. Select a database and click on connect button.
 4. When you are connected to the database, you may directly write your sql statement in the "Query" box and hit "Run" to retrieve data.
-5. You may also use the generate feature. To do so, select a table, column, operator and enter criteria. The sql staement will be automatically generated in the query box.
+5. You may also use the generate feature. To do so, select a table, column, operator and enter criteria. The sql statement will be automatically generated in the query box.
 6. You may right click on the table to copy data or headers.
 
 ## Built With
